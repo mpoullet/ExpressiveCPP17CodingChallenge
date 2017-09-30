@@ -33,6 +33,10 @@
 // CSV parsing:
 // https://stackoverflow.com/a/1120224/496459
 
+// Finding an element and its index in a vector:
+// https://stackoverflow.com/a/15099743/496459
+// https://stackoverflow.com/q/2152986/496459
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -57,11 +61,9 @@ namespace tool {
 		CSV_OUTPUT_FILE = 4
 	};
 
-	auto split_line_into_tokens(std::istream& str)
+	auto split_line_into_tokens(std::string line)
 	{
 		std::vector<std::string> result;
-		std::string              line;
-		std::getline(str, line);
 
 		std::istringstream line_stream(line);
 		std::string       cell;
@@ -79,7 +81,8 @@ namespace tool {
 		std::ostringstream oss;
 		for (const auto& token : tokens)
 		{
-			oss << token << ',';
+			oss << token;
+			oss << ',';
 		}
 
 		std::string line = oss.str();
@@ -102,17 +105,50 @@ int main(int argc, char* argv[])
 		return tool::error_codes::NO_CSV_INPUT_FILE;
 	}
 
-	std::ifstream file(input_filename);
-	auto column_names = tool::split_line_into_tokens(file);
+	std::ifstream input_file(input_filename);
+	std::string column_line;
+	std::getline(input_file, column_line);
+	auto column_names = tool::split_line_into_tokens(column_line);
 
-	for (const auto& token : column_names) std::cout << token << '\n';
+	for (const auto& names : column_names)
+	{
+		std::cout << names;
+		std::cout << '\n';
+	}
 
 	std::string wanted_column = argv[tool::parameter_position::COLUMN_NAME];
-	if (std::find(std::begin(column_names), std::end(column_names), wanted_column) == std::end(column_names))
+
+	auto found_column = std::find(std::begin(column_names), std::end(column_names), wanted_column);
+	if (found_column == std::end(column_names))
 	{
 		std::cerr << "column name doesn't exists in the input file\n";
 		return tool::error_codes::NO_COLUMN_NAME;
 	}
+	auto column_position = std::distance(std::begin(column_names), found_column);
+
+	std::cout << "Column " << wanted_column << " found at position " << column_position << '\n';
+
+	std::string wanted_value = argv[tool::parameter_position::REPLACEMENT_STRING];
+
+	auto output_filename = argv[tool::parameter_position::CSV_OUTPUT_FILE];
+	std::ofstream output_file(output_filename);
+	output_file << column_line;
+	output_file << '\n';
 
 	std::cout << tool::merge_tokens_into_line(column_names) << '\n';
+
+	std::string line;
+	while (std::getline(input_file, line))
+	{
+		auto tokens = tool::split_line_into_tokens(line);
+		tokens[column_position] = wanted_value;
+		for (const auto& token : tokens)
+		{
+			std::cout << token;
+			std::cout << '\n';
+		}
+		std::cout << "--\n";
+		output_file << tool::merge_tokens_into_line(tokens);
+		output_file << '\n';
+	}
 }
