@@ -1,4 +1,5 @@
 // https://www.fluentcpp.com/2017/09/25/expressive-cpp17-coding-challenge/
+// http://www.bfilipek.com/2017/09/the-expressive-cpp17-challenge.html
 
 // The task proposed in the challenge is to write a command line tool that:
 // 1 - takes in a CSV file
