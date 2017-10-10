@@ -111,12 +111,6 @@ int main(int argc, char* argv[])
 	auto column_names = tool::split_line_into_tokens(column_line);
 	auto number_of_columns = column_names.size();
 
-	for (const auto& names : column_names)
-	{
-		std::cout << names;
-		std::cout << '\n';
-	}
-
 	std::string wanted_column = argv[tool::parameter_position::COLUMN_NAME];
 
 	auto found_column = std::find(std::begin(column_names), std::end(column_names), wanted_column);
@@ -127,8 +121,6 @@ int main(int argc, char* argv[])
 	}
 	auto column_position = std::distance(std::begin(column_names), found_column);
 
-	std::cout << "Column " << wanted_column << " found at position " << column_position << '\n';
-
 	std::string wanted_value = argv[tool::parameter_position::REPLACEMENT_STRING];
 
 	auto output_filename = argv[tool::parameter_position::CSV_OUTPUT_FILE];
@@ -136,26 +128,18 @@ int main(int argc, char* argv[])
 	output_file << column_line;
 	output_file << '\n';
 
-	std::cout << tool::merge_tokens_into_line(column_names) << '\n';
-
 	std::string line;
 	while (std::getline(input_file, line))
 	{
 		auto tokens = tool::split_line_into_tokens(line);
-		for (const auto& token : tokens)
-		{
-			std::cout << token;
-			std::cout << '\n';
-		}
 		if (tokens.size() == number_of_columns)
 		{
 			tokens[column_position] = wanted_value;
-			std::cout << "--\n";
 			output_file << tool::merge_tokens_into_line(tokens);
 			output_file << '\n';
 		}
 		else {
-			std::cout << "skipping line " << tool::merge_tokens_into_line(tokens) << '\n';
+			std::cout << "skipping line: " << tool::merge_tokens_into_line(tokens) << '\n';
 		}
 	}
 }
