@@ -15,16 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Tool.cpp">
-      <Filter>Headerdateien</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="expressive_cpp17_before.csv">
       <Filter>Ressourcendateien</Filter>
     </None>
     <None Include="expressive_cpp17_after.csv">
       <Filter>Ressourcendateien</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Tool.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

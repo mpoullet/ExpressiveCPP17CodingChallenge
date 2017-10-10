@@ -154,11 +154,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Tool.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="expressive_cpp17_after.csv" />
     <None Include="expressive_cpp17_before.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Tool.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
