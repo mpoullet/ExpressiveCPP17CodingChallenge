@@ -109,6 +109,7 @@ int main(int argc, char* argv[])
 	std::string column_line;
 	std::getline(input_file, column_line);
 	auto column_names = tool::split_line_into_tokens(column_line);
+	auto number_of_columns = column_names.size();
 
 	for (const auto& names : column_names)
 	{
@@ -141,14 +142,20 @@ int main(int argc, char* argv[])
 	while (std::getline(input_file, line))
 	{
 		auto tokens = tool::split_line_into_tokens(line);
-		tokens[column_position] = wanted_value;
 		for (const auto& token : tokens)
 		{
 			std::cout << token;
 			std::cout << '\n';
 		}
-		std::cout << "--\n";
-		output_file << tool::merge_tokens_into_line(tokens);
-		output_file << '\n';
+		if (tokens.size() == number_of_columns)
+		{
+			tokens[column_position] = wanted_value;
+			std::cout << "--\n";
+			output_file << tool::merge_tokens_into_line(tokens);
+			output_file << '\n';
+		}
+		else {
+			std::cout << "skipping line " << tool::merge_tokens_into_line(tokens) << '\n';
+		}
 	}
 }
