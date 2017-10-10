@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
 		return tool::error_codes::NOT_ENOUGH_PARAMETERS;
 	}
 
-	auto input_filename = argv[tool::parameter_position::CSV_INPUT_FILE];
+	const auto input_filename = argv[tool::parameter_position::CSV_INPUT_FILE];
 	if (!fs::exists(input_filename))
 	{
 		std::cerr << "input file missing\n";
@@ -108,22 +108,22 @@ int main(int argc, char* argv[])
 	std::ifstream input_file(input_filename);
 	std::string column_line;
 	std::getline(input_file, column_line);
-	auto column_names = tool::split_line_into_tokens(column_line);
-	auto number_of_columns = column_names.size();
+	const auto column_names = tool::split_line_into_tokens(column_line);
+	const auto number_of_columns = column_names.size();
 
-	std::string wanted_column = argv[tool::parameter_position::COLUMN_NAME];
+	const std::string wanted_column = argv[tool::parameter_position::COLUMN_NAME];
 
-	auto found_column = std::find(std::begin(column_names), std::end(column_names), wanted_column);
+	const auto found_column = std::find(std::begin(column_names), std::end(column_names), wanted_column);
 	if (found_column == std::end(column_names))
 	{
 		std::cerr << "column name doesn't exists in the input file\n";
 		return tool::error_codes::NO_COLUMN_NAME;
 	}
-	auto column_position = std::distance(std::begin(column_names), found_column);
+	const auto column_position = std::distance(std::begin(column_names), found_column);
 
-	std::string wanted_value = argv[tool::parameter_position::REPLACEMENT_STRING];
+	const std::string wanted_value = argv[tool::parameter_position::REPLACEMENT_STRING];
 
-	auto output_filename = argv[tool::parameter_position::CSV_OUTPUT_FILE];
+	const auto output_filename = argv[tool::parameter_position::CSV_OUTPUT_FILE];
 	std::ofstream output_file(output_filename);
 	output_file << column_line;
 	output_file << '\n';
