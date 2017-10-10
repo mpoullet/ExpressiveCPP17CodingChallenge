@@ -37,10 +37,14 @@
 // https://stackoverflow.com/a/15099743/496459
 // https://stackoverflow.com/q/2152986/496459
 
+// My entry on coliru:
+// http://coliru.stacked-crooked.com/a/122f7799b53dfba1
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <algorithm>
 #include <filesystem>
 
 namespace fs = std::experimental::filesystem;
