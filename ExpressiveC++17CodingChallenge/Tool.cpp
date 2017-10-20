@@ -92,7 +92,7 @@ namespace tool {
 		}
 
 		std::string line = oss.str();
-		line.pop_back();
+		if (!line.empty()) line.pop_back();
 		return line;
 	}
 }
