@@ -161,13 +161,11 @@ int main(int argc, char* argv[])
             return -1;
         }
 
-
         std::ofstream outfile(inputItemsMap[InputItems::output], std::ios::out);
         if (!outfile.is_open()) {
             std::cerr << "Invalid output file:" << inputItemsMap[InputItems::output] << '\n';
             return -1;
         }
-
 
         outfile << header << "\n";
 
@@ -181,4 +179,3 @@ int main(int argc, char* argv[])
         std::cerr << err.what() << '\n';
     }
 }
-
