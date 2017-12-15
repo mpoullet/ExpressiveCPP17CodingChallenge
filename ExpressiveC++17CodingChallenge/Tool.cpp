@@ -100,7 +100,7 @@ namespace tool {
 		}
 		return line;
 	}
-}
+} // namespace tool
 
 int main(int argc, char* argv[])
 {
