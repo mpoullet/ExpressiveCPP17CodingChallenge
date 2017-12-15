@@ -67,7 +67,7 @@ namespace tool {
 		CSV_OUTPUT_FILE = 4
 	};
 
-	auto split_line_into_tokens(std::string line)
+	auto split_line_into_tokens(const std::string& line)
 	{
 		std::vector<std::string> result;
 
@@ -82,7 +82,7 @@ namespace tool {
 		return result;
 	}
 
-	auto merge_tokens_into_line(std::vector<std::string>& tokens)
+	auto merge_tokens_into_line(const std::vector<std::string>& tokens)
 	{
 		std::ostringstream oss;
 		for (const auto& token : tokens)
