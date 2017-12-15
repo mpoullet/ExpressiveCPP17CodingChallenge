@@ -11,16 +11,16 @@
 // 3 - the string that will be used as a replacement for that column
 // 4 - the filename where the output will be written.
 
-// For instance, if the CSV file had a column “City” with various values for the entries in the file,
+// For instance, if the CSV file had a column "City" with various values for the entries in the file,
 // calling the tool with the name of the input file, City, London and the name of output file would result in a copy of the initial file,
-// but with all cities set equal to “London”:
+// but with all cities set equal to "London":
 
 // Tool.exe input.csv City London output.csv
 
 // Here is how to deal with edge cases:
-// if the input file is empty, the program should write “input file missing” to the console.
-// if the input file does not contain the specified column, the program should write “column name doesn’t exists in the input file” to the console.
-// In both cases, there shouldn’t be any output file generated.
+// if the input file is empty, the program should write "input file missing" to the console.
+// if the input file does not contain the specified column, the program should write "column name doesn't exists in the input file" to the console.
+// In both cases, there shouldn't be any output file generated.
 // And if the program succeeds but there is already a file having the name specified for output, the program should overwrite this file.
 
 // Tools:
