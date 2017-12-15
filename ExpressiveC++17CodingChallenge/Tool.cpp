@@ -41,13 +41,16 @@
 // My entry on coliru:
 // http://coliru.stacked-crooked.com/a/122f7799b53dfba1
 
+#include <algorithm>
 #include <iostream>
+#ifdef _WIN32
+#include <filesystem>
+#else
+#include <experimental/filesystem>
+#endif
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <algorithm>
-// #include <experimental/filesystem> // g++/clang
-#include <filesystem>
 
 namespace fs = std::experimental::filesystem;
 
