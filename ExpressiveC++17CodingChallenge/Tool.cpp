@@ -52,7 +52,7 @@
 namespace fs = std::experimental::filesystem;
 
 namespace tool {
-	const auto NUMBER_OF_PARAMETERS = 4;
+	const auto NUMBER_OF_PARAMETERS{ 4 };
 	
 	enum error_codes {
 		NOT_ENOUGH_PARAMETERS = 1,
@@ -91,7 +91,7 @@ namespace tool {
 			oss << ',';
 		}
 
-		std::string line = oss.str();
+		std::string line{ oss.str() };
 		if (!line.empty()) {
 			line.pop_back();
 		}
@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
 		return tool::error_codes::NOT_ENOUGH_PARAMETERS;
 	}
 
-	const auto input_filename = argv[tool::parameter_position::CSV_INPUT_FILE];
+	const auto input_filename{ argv[tool::parameter_position::CSV_INPUT_FILE] };
 	if (!fs::exists(input_filename))
 	{
 		std::cerr << "input file missing\n";
@@ -116,22 +116,22 @@ int main(int argc, char* argv[])
 	std::ifstream input_file(input_filename);
 	std::string column_line;
 	std::getline(input_file, column_line);
-	const auto column_names = tool::split_line_into_tokens(column_line);
-	const auto number_of_columns = column_names.size();
+	const auto column_names{ tool::split_line_into_tokens(column_line) };
+	const auto number_of_columns{ column_names.size() };
 
-	const std::string wanted_column = argv[tool::parameter_position::COLUMN_NAME];
+	const std::string wanted_column{ argv[tool::parameter_position::COLUMN_NAME] };
 
-	const auto found_column = std::find(std::begin(column_names), std::end(column_names), wanted_column);
+	const auto found_column{ std::find(std::begin(column_names), std::end(column_names), wanted_column) };
 	if (found_column == std::end(column_names))
 	{
 		std::cerr << "column name doesn't exists in the input file\n";
 		return tool::error_codes::NO_COLUMN_NAME;
 	}
-	const auto column_position = std::distance(std::begin(column_names), found_column);
+	const auto column_position{ std::distance(std::begin(column_names), found_column) };
 
-	const std::string wanted_value = argv[tool::parameter_position::REPLACEMENT_STRING];
+	const std::string wanted_value{ argv[tool::parameter_position::REPLACEMENT_STRING] };
 
-	const auto output_filename = argv[tool::parameter_position::CSV_OUTPUT_FILE];
+	const auto output_filename{ argv[tool::parameter_position::CSV_OUTPUT_FILE] };
 	std::ofstream output_file(output_filename);
 	output_file << column_line;
 	output_file << '\n';
@@ -139,7 +139,7 @@ int main(int argc, char* argv[])
 	std::string line;
 	while (std::getline(input_file, line))
 	{
-		auto tokens = tool::split_line_into_tokens(line);
+		auto tokens{ tool::split_line_into_tokens(line) };
 		if (tokens.size() == number_of_columns)
 		{
 			tokens[column_position] = wanted_value;
