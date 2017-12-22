@@ -49,6 +49,7 @@
 #include <experimental/filesystem>
 #endif
 #include <fstream>
+#include <gsl/multi_span>
 #include <sstream>
 #include <string>
 
@@ -57,17 +58,17 @@ namespace fs = std::experimental::filesystem;
 namespace tool {
 	const auto NUMBER_OF_PARAMETERS{ 4 };
 	
-	enum error_codes {
-		NOT_ENOUGH_PARAMETERS = 1,
-		NO_CSV_INPUT_FILE = 2,
-		NO_COLUMN_NAME = 3
+	namespace error_codes {
+		constexpr auto NOT_ENOUGH_PARAMETERS{ 1 };
+		constexpr auto NO_CSV_INPUT_FILE{ 2 };
+		constexpr auto NO_COLUMN_NAME{ 3 };
 	};
 
-	enum parameter_position {
-		CSV_INPUT_FILE = 1,
-		COLUMN_NAME = 2,
-		REPLACEMENT_STRING = 3,
-		CSV_OUTPUT_FILE = 4
+	namespace parameter_position {
+		constexpr auto CSV_INPUT_FILE{ 1 };
+		constexpr auto COLUMN_NAME{ 2 };
+		constexpr auto REPLACEMENT_STRING{ 3 };
+		constexpr auto CSV_OUTPUT_FILE{ 4 };
 	};
 
 	auto split_line_into_tokens(const std::string& line)
@@ -109,7 +110,9 @@ int main(int argc, char* argv[])
 		return tool::error_codes::NOT_ENOUGH_PARAMETERS;
 	}
 
-	const auto input_filename{ argv[tool::parameter_position::CSV_INPUT_FILE] };
+	const auto args = gsl::multi_span<char*>(argv, argc);
+
+	const auto input_filename{ args[tool::parameter_position::CSV_INPUT_FILE] };
 	if (!fs::exists(input_filename))
 	{
 		std::cerr << "input file missing\n";
@@ -122,7 +125,7 @@ int main(int argc, char* argv[])
 	const auto column_names{ tool::split_line_into_tokens(column_line) };
 	const auto number_of_columns{ column_names.size() };
 
-	const std::string wanted_column{ argv[tool::parameter_position::COLUMN_NAME] };
+	const std::string wanted_column{ args[tool::parameter_position::COLUMN_NAME] };
 
 	const auto found_column{ std::find(std::begin(column_names), std::end(column_names), wanted_column) };
 	if (found_column == std::end(column_names))
@@ -132,9 +135,9 @@ int main(int argc, char* argv[])
 	}
 	const auto column_position{ std::distance(std::begin(column_names), found_column) };
 
-	const std::string wanted_value{ argv[tool::parameter_position::REPLACEMENT_STRING] };
+	const std::string wanted_value{ args[tool::parameter_position::REPLACEMENT_STRING] };
 
-	const auto output_filename{ argv[tool::parameter_position::CSV_OUTPUT_FILE] };
+	const auto output_filename{ args[tool::parameter_position::CSV_OUTPUT_FILE] };
 	std::ofstream output_file(output_filename);
 	output_file << column_line;
 	output_file << '\n';
