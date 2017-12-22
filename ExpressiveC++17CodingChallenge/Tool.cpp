@@ -29,6 +29,10 @@
 // C++17 only, no external libraries
 // VS2017
 // snake_case, no CamelCase
+// ClangFormat - LLVM Extensions:
+// https://marketplace.visualstudio.com/items?itemName=LLVMExtensions.ClangFormat
+// Clang Format Selection (CTRL+R, CTRL+F)
+// Clang Format Document  (CTRl+R, CTRL+D)
 
 // https://stackoverflow.com/a/15595559/496459
 // Properties -> Configuration Properties -> Linker -> System -> SubSystem ->
